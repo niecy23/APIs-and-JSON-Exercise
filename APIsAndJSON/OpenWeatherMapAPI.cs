@@ -1,12 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace APIsAndJSON
 {
-    internal class OpenWeatherMapAPI
+    public class OpenWeatherMapAPI
     {
+        //Method to get the current temperature of a zip code.
+        public static double GetTemp(string apiCall)
+        {
+            var client = new HttpClient();
+
+            var openWeatherResponse = client.GetStringAsync(apiCall).Result;
+
+            var temp = double.Parse(JObject.Parse(openWeatherResponse)["main"]["temp"].ToString());
+
+            return temp;
+
+        }
     }
 }
